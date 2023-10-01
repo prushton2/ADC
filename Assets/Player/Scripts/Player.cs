@@ -13,8 +13,8 @@ public class Player : MonoBehaviour
     public float speed = 7f;
     public float runMultiplier = 1.5f;
 
-    public float jumpSpeed = 0.16f;
-    public float gravity = 1f;
+    public float jumpSpeed = 0.2f;
+    public float gravity = 0.01f;
 
     public float Sensitivity = 1.15f;
     public float deltaX;
