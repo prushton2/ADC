@@ -73,7 +73,6 @@ public class Door : Executable
     public void Close() {state = "Closing";}
 
     public override string execute(string[] args) {
-        Debug.Log(args);
         switch (args[1]) {
             case "open":
                 Open();
