@@ -151,8 +151,10 @@ public class Player : MonoBehaviour
             // velocity = new Vector3(hardVelocity.x * 2, hardVelocity.y * 2, hardVelocity.z * 2);
             state = "inair";
             stateProgress = 0;
-            // velocity.x = transform.forward.x;
-            // velocity.z = transform.forward.z;
+            int mult = 2000;
+            Debug.Log("A");
+            velocity.x = transform.forward.x * mult;
+            velocity.z = transform.forward.z * mult;
         }
 
         stateProgress += 1;

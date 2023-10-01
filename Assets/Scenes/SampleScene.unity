@@ -2632,8 +2632,8 @@ MonoBehaviour:
   healthPool: {fileID: 1134543589}
   speed: 7
   runMultiplier: 1.5
-  jumpSpeed: 0.03
-  gravity: 0.1
+  jumpSpeed: 0.2
+  gravity: 0.01
   Sensitivity: 1.15
   deltaX: 0
   state: grounded
