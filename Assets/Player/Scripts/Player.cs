@@ -28,8 +28,8 @@ public class Player : MonoBehaviour
 
     //computational
 
-    private Vector3 moveDirection = Vector3.zero;
-    private Vector3 hardVelocity = Vector3.zero;
+    public Vector3 moveDirection = Vector3.zero;
+    public Vector3 velocity = Vector3.zero;
 
     void Start() {
         characterController = GetComponent<CharacterController>();
@@ -39,17 +39,22 @@ public class Player : MonoBehaviour
         //we update the state
         
 
-        //we put physics critical things here, like hard velocity falloff
         switch(state) {
             case "grounded":
-                hardVelocityFallOff(30);
+                physics();
                 break;
             case "inair":
-                hardVelocityFallOff(1);
+                physics();
                 break;
-        }   
-        characterController.Move(hardVelocity);
-
+            default:
+                break;
+        }
+        
+        characterController.Move(velocity);
+        
+        if(state == "grounded" || state == "inair") {
+            state = characterController.isGrounded ? "grounded" : "inair";
+        }
     }
 
     void Update()
@@ -59,10 +64,6 @@ public class Player : MonoBehaviour
         }
 
         //update this here instead because fast
-        if(state == "grounded" || state == "inair") {
-            state = characterController.isGrounded ? "grounded" : "inair";
-            Debug.Log(characterController.isGrounded);
-        }
 
         //We put user-critical things here, things the user controls. This has a higher refresh rate, and the movement is accurate at low frame rates
         switch (state) {
@@ -70,13 +71,11 @@ public class Player : MonoBehaviour
                 look();
                 wasd();
                 jump();
-                fall();
                 break;
             
             case "inair":
                 look();
                 wasd();
-                fall();
                 break;
 
             case "dash":
@@ -88,7 +87,6 @@ public class Player : MonoBehaviour
                 break;
         }
 
-        characterController.Move(moveDirection); //ALL REFERENCES TO MOVEDIRECTION SHOULD INCLUDE TIME.DELTATIME
     }
 
     void look() {
@@ -97,8 +95,8 @@ public class Player : MonoBehaviour
     }
 
     void wasd() {
-        moveDirection.x = 0;
-        moveDirection.z = 0;
+        moveDirection = Vector3.zero; //.x = 0;
+        // moveDirection.z = 0;
 
         if (Input.GetKey("w")) {
             moveDirection.x += transform.forward.x*speed*Time.deltaTime;
@@ -122,46 +120,51 @@ public class Player : MonoBehaviour
             stateProgress = 0;
         }
 
+        characterController.Move(moveDirection); //ALL REFERENCES TO MOVEDIRECTION SHOULD INCLUDE TIME.DELTATIME
     }
 
-    void fall() {
+    void physics() {
         if (!characterController.isGrounded) { //This code modifies the accumulator moveDirection.y, allowing jumping and falling properly
-            moveDirection.y -= gravity*Time.deltaTime;
+            velocity.y -= gravity;
         } else {// (characterController.isGrounded) {
-            moveDirection.y = 0;
+            velocity.y = -0.1f;
         }
+        float drate = 0.1f;
+        velocity.x -= drate * velocity.x;
+        velocity.z -= drate * velocity.z;
+        // velocity -= new Vector3(drate * velocity.x, 0, drate * velocity.z);
     }
 
     void jump() {
         if(Input.GetKey("space")) {
-            moveDirection.y = jumpSpeed;
+            velocity.y = jumpSpeed;
         }
     }
 
-    void hardVelocityFallOff(int rate) {
-        float drate = rate * 0.01f;
-        hardVelocity -= new Vector3(drate * hardVelocity.x, drate * hardVelocity.y, drate * hardVelocity.z);
-    }
+    // void hardVelocityFallOff(int rate) {
+    //     float drate = rate * 0.01f;
+    // }
 
     void dash() {
         if(Input.GetKey("space")) {
             jump();
+            // velocity = new Vector3(hardVelocity.x * 2, hardVelocity.y * 2, hardVelocity.z * 2);
             state = "inair";
             stateProgress = 0;
-            hardVelocity = new Vector3(hardVelocity.x * 2, hardVelocity.y * 2, hardVelocity.z * 2);
-        }
-        stateProgress += 1;
-        if(stateProgress == 1) {
-            hardVelocity = transform.forward;
+            // velocity.x = transform.forward.x;
+            // velocity.z = transform.forward.z;
         }
 
+        stateProgress += 1;
+        // if(stateProgress == 1) {
+            velocity.x = transform.forward.x;
+            velocity.z = transform.forward.z;
+        // }
+
         if(stateProgress >= 200) {
-            hardVelocity = Vector3.zero;
+            velocity = Vector3.zero;
             state = "grounded";
             stateProgress = 0;
         }
     }
-
-        
-
 }
