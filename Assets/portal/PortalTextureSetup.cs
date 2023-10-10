@@ -19,34 +19,32 @@ public class PortalTextureSetup : MonoBehaviour
 
     void Start()
     {
-
         setLink(LinkA, LinkB);
-
-        // if(cameraB.targetTexture != null) {
-        //     cameraB.targetTexture.Release();
-        // }
-
-        // cameraB.targetTexture = new RenderTexture(Screen.width, Screen.height, 24);
-        // cameraMatB.mainTexture = cameraB.targetTexture;
     }
 
     void setLink(GameObject portalA, GameObject portalB) {
         
+        //set the other portals
         portalA.transform.GetChild(0).gameObject.GetComponent<portalcamera>().otherPortal = portalB.transform;
         portalB.transform.GetChild(0).gameObject.GetComponent<portalcamera>().otherPortal = portalA.transform;
         
+        //reference cameras
         Camera camA = portalA.transform.GetChild(0).gameObject.GetComponent<Camera>();
         Camera camB = portalB.transform.GetChild(0).gameObject.GetComponent<Camera>();
 
+        //remove any target textures they may have
         if(camA.targetTexture != null) { camA.targetTexture.Release(); }
         if(camB.targetTexture != null) { camB.targetTexture.Release(); }
 
+        //set the camA's target texture to a new render texture based on the screen size and set Camera Mat A's texture to the render texture
         camA.targetTexture = new RenderTexture(Screen.width, Screen.height, 24);
         cameraMatA.mainTexture = camA.targetTexture;
 
+        //same for b
         camB.targetTexture = new RenderTexture(Screen.width, Screen.height, 24);
         cameraMatB.mainTexture = camB.targetTexture;
 
+        //set the portal's plane's material to the other portals material
         portalA.transform.GetChild(2).gameObject.GetComponent<Renderer>().material = cameraMatB;
         portalB.transform.GetChild(2).gameObject.GetComponent<Renderer>().material = cameraMatA;
 

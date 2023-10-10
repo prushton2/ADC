@@ -561,7 +561,7 @@ MonoBehaviour:
   Portal2: {fileID: 1441989541}
   Portal3: {fileID: 199099780}
   LinkA: {fileID: 1389692697}
-  LinkB: {fileID: 1441989541}
+  LinkB: {fileID: 199099780}
 --- !u!1 &199099780
 GameObject:
   m_ObjectHideFlags: 0
