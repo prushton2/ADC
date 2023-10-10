@@ -11,12 +11,15 @@ public class portalcamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        thisPortal = transform.parent;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(otherPortal == null) {
+            return;
+        }
         Vector3 distanceOffset = playerCamera.position - otherPortal.position;
         transform.position = thisPortal.position + distanceOffset;
 
