@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PortalTextureSetup : MonoBehaviour
+public class PortalController : Executable
 {
     // Start is called before the first frame update
 
@@ -10,12 +10,13 @@ public class PortalTextureSetup : MonoBehaviour
     public Material cameraMatA;
     public Material cameraMatB;
 
-    public GameObject Portal1;
-    public GameObject Portal2;
-    public GameObject Portal3;
-
     public GameObject LinkA;
     public GameObject LinkB;
+
+    // public GameObject Portal1;
+    // public GameObject Portal2;
+    // public GameObject Portal3;
+
 
     void Start()
     {
@@ -48,5 +49,9 @@ public class PortalTextureSetup : MonoBehaviour
         portalA.transform.GetChild(2).gameObject.GetComponent<Renderer>().material = cameraMatB;
         portalB.transform.GetChild(2).gameObject.GetComponent<Renderer>().material = cameraMatA;
 
+    }
+
+    public override string execute(string[] args) {
+        return "";
     }
 }
