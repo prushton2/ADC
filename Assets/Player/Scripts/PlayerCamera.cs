@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 
-public class Camera : MonoBehaviour {
+public class PlayerCamera : MonoBehaviour {
 
     public Player playerScript;
     public Canvas canvas;

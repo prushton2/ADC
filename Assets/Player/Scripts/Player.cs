@@ -35,27 +35,27 @@ public class Player : MonoBehaviour
         characterController = GetComponent<CharacterController>();
     }
 
-    void FixedUpdate() {
-        //we update the state
+    // void FixedUpdate() {
+    //     //we update the state
         
 
-        switch(state) {
-            case "grounded":
-                physics();
-                break;
-            case "inair":
-                physics();
-                break;
-            default:
-                break;
-        }
+    //     switch(state) {
+    //         case "grounded":
+    //             physics();
+    //             break;
+    //         case "inair":
+    //             physics();
+    //             break;
+    //         default:
+    //             break;
+    //     }
         
-        characterController.Move(velocity);
+    //     characterController.Move(velocity);
         
-        if(state == "grounded" || state == "inair") {
-            state = characterController.isGrounded ? "grounded" : "inair";
-        }
-    }
+    //     if(state == "grounded" || state == "inair") {
+    //         state = characterController.isGrounded ? "grounded" : "inair";
+    //     }
+    // }
 
     void Update()
     {
@@ -78,10 +78,10 @@ public class Player : MonoBehaviour
                 wasd();
                 break;
 
-            case "dash":
-                look();
-                dash();
-                break;
+            // case "dash":
+            //     look();
+            //     dash();
+            //     break;
 
             default:
                 break;
@@ -115,10 +115,10 @@ public class Player : MonoBehaviour
             moveDirection.z += -transform.right.z*speed*Time.deltaTime;
         }
         
-        if(Input.GetKeyDown("left shift")) {
-            state = "dash"; //moveDirection = new Vector3(moveDirection.x * runMultiplier, moveDirection.y, moveDirection.z * runMultiplier);
-            stateProgress = 0;
-        }
+        // if(Input.GetKeyDown("left shift")) {
+        //     state = "dash"; //moveDirection = new Vector3(moveDirection.x * runMultiplier, moveDirection.y, moveDirection.z * runMultiplier);
+        //     stateProgress = 0;
+        // }
 
         characterController.Move(moveDirection); //ALL REFERENCES TO MOVEDIRECTION SHOULD INCLUDE TIME.DELTATIME
     }
@@ -144,40 +144,40 @@ public class Player : MonoBehaviour
     void jump() {
         if(Input.GetKey("space")) {
             velocity.y = jumpSpeed;
-            Debug.Log("Jump");
+            // Debug.Log("Jump");
         }
     }
 
-    void dash() {
+    // void dash() {
 
-        if(Input.GetKey("space")) {
-            jump();
-            int mult = 1000;
-            velocity.x = transform.forward.x * mult;
-            velocity.z = transform.forward.z * mult;
-            state = "inAir";
-        }
+    //     if(Input.GetKey("space")) {
+    //         jump();
+    //         int mult = 1000;
+    //         velocity.x = transform.forward.x * mult;
+    //         velocity.z = transform.forward.z * mult;
+    //         state = "inAir";
+    //     }
 
-        // if(Input.GetKey("space")) {
-        //     // velocity = new Vector3(hardVelocity.x * 2, hardVelocity.y * 2, hardVelocity.z * 2);
-        //     int mult = 1;
-        //     velocity.x = 0; //transform.forward.x * mult;
-        //     velocity.z = 0; //transform.forward.z * mult;
-        //     stateProgress = 0;
-        //     state = "inair";
-        //     jump();
-        // }
+    //     // if(Input.GetKey("space")) {
+    //     //     // velocity = new Vector3(hardVelocity.x * 2, hardVelocity.y * 2, hardVelocity.z * 2);
+    //     //     int mult = 1;
+    //     //     velocity.x = 0; //transform.forward.x * mult;
+    //     //     velocity.z = 0; //transform.forward.z * mult;
+    //     //     stateProgress = 0;
+    //     //     state = "inair";
+    //     //     jump();
+    //     // }
 
-        stateProgress += 1;
-        // if(stateProgress == 1) {
-            velocity.x = transform.forward.x;
-            velocity.z = transform.forward.z;
-        // }
+    //     stateProgress += 1;
+    //     // if(stateProgress == 1) {
+    //         velocity.x = transform.forward.x;
+    //         velocity.z = transform.forward.z;
+    //     // }
 
-        if(stateProgress >= 200) {
-            velocity = Vector3.zero;
-            state = "grounded";
-            stateProgress = 0;
-        }
-    }
+    //     if(stateProgress >= 200) {
+    //         velocity = Vector3.zero;
+    //         state = "grounded";
+    //         stateProgress = 0;
+    //     }
+    // }
 }
