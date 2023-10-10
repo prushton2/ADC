@@ -124,38 +124,49 @@ public class Player : MonoBehaviour
     }
 
     void physics() {
+        //horizontal velocity drain rate
+        float drate;
         if (!characterController.isGrounded) { //This code modifies the accumulator moveDirection.y, allowing jumping and falling properly
             velocity.y -= gravity;
-        } else {// (characterController.isGrounded) {
+            drate = 0.01f;
+        } else {
             velocity.y = -0.1f;
+            drate = 0.3f;
         }
-        float drate = 0.1f;
-        velocity.x -= drate * velocity.x;
-        velocity.z -= drate * velocity.z;
-        // velocity -= new Vector3(drate * velocity.x, 0, drate * velocity.z);
+
+        velocity.x *= 1.0f - drate;
+        velocity.z *= 1.0f - drate;
+    
+        // velocity.x = ;
+        // velocity.z = ;
     }
 
     void jump() {
         if(Input.GetKey("space")) {
             velocity.y = jumpSpeed;
+            Debug.Log("Jump");
         }
     }
 
-    // void hardVelocityFallOff(int rate) {
-    //     float drate = rate * 0.01f;
-    // }
-
     void dash() {
+
         if(Input.GetKey("space")) {
             jump();
-            // velocity = new Vector3(hardVelocity.x * 2, hardVelocity.y * 2, hardVelocity.z * 2);
-            state = "inair";
-            stateProgress = 0;
-            int mult = 2000;
-            Debug.Log("A");
+            int mult = 1000;
             velocity.x = transform.forward.x * mult;
             velocity.z = transform.forward.z * mult;
+            state = "inAir";
         }
+
+        // if(Input.GetKey("space")) {
+        //     // velocity = new Vector3(hardVelocity.x * 2, hardVelocity.y * 2, hardVelocity.z * 2);
+        //     int mult = 1;
+        //     velocity.x = 0; //transform.forward.x * mult;
+        //     velocity.z = 0; //transform.forward.z * mult;
+        //     stateProgress = 0;
+        //     state = "inair";
+        //     jump();
+        // }
 
         stateProgress += 1;
         // if(stateProgress == 1) {
