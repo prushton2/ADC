@@ -49,6 +49,9 @@ public class PortalController : Executable
         portalA.transform.GetChild(2).gameObject.GetComponent<Renderer>().material = cameraMatB;
         portalB.transform.GetChild(2).gameObject.GetComponent<Renderer>().material = cameraMatA;
 
+        //Link the teleporter scripts
+        portalA.transform.GetChild(3).gameObject.GetComponent<portalTeleporter>().otherPortal = portalB;
+        portalB.transform.GetChild(3).gameObject.GetComponent<portalTeleporter>().otherPortal = portalA;
     }
 
     public override string execute(string[] args) {
