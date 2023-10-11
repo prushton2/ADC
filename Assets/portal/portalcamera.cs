@@ -11,6 +11,7 @@ public class portalcamera : MonoBehaviour
     // Start is called before the first frame update
 
     public Vector3 distanceOffset;
+    public float angularDifferenceBetweenPortalRotations;
     void Start()
     {
         thisPortal = transform.parent;
@@ -24,20 +25,21 @@ public class portalcamera : MonoBehaviour
         }
 
         distanceOffset = otherPortal.transform.InverseTransformPoint(playerCamera.position);// - otherPortal.position;
-        transform.localPosition = new Vector3(distanceOffset.x, distanceOffset.y, distanceOffset.z);
+        transform.localPosition = new Vector3(-distanceOffset.x, distanceOffset.y, -distanceOffset.z);
 
 
         // //the problem is that the rotation of each portal is not taken into account when caculating where the camera should be
 
-        float angularDifferenceBetweenPortalRotations = Quaternion.Angle(thisPortal.rotation, otherPortal.rotation);
+        angularDifferenceBetweenPortalRotations = Quaternion.Angle(thisPortal.rotation, otherPortal.rotation);
 
-        // Debug.Log(angularDifferenceBetweenPortalRotations);
+        Debug.Log(angularDifferenceBetweenPortalRotations);
 
 		Quaternion portalRotationalDifference = Quaternion.AngleAxis(angularDifferenceBetweenPortalRotations, Vector3.up);
 
         // Debug.Log(portalRotationalDifference * new Vector3(1f, 1f, 1f));
 
-		Vector3 newCameraDirection = portalRotationalDifference * playerCamera.forward;
+		Vector3 newCameraDirection = portalRotationalDifference * -playerCamera.forward;
+        newCameraDirection.y *= -1;
 
         // Debug.Log(transform.rotation);
 
