@@ -22,19 +22,24 @@ public class portalcamera : MonoBehaviour
         if(otherPortal == null) {
             return;
         }
-        distanceOffset = playerCamera.position - otherPortal.position;
-        transform.localPosition = /*thisPortal.position + */distanceOffset;
 
-        //the problem is that the rotation of each portal is not taken into account when caculating where the camera should be
+        distanceOffset = otherPortal.transform.InverseTransformPoint(playerCamera.position);// - otherPortal.position;
+        transform.localPosition = new Vector3(distanceOffset.x, distanceOffset.y, distanceOffset.z);
+
+
+        // //the problem is that the rotation of each portal is not taken into account when caculating where the camera should be
 
         float angularDifferenceBetweenPortalRotations = Quaternion.Angle(thisPortal.rotation, otherPortal.rotation);
 
-        Debug.Log(angularDifferenceBetweenPortalRotations);
+        // Debug.Log(angularDifferenceBetweenPortalRotations);
 
 		Quaternion portalRotationalDifference = Quaternion.AngleAxis(angularDifferenceBetweenPortalRotations, Vector3.up);
+
+        // Debug.Log(portalRotationalDifference * new Vector3(1f, 1f, 1f));
+
 		Vector3 newCameraDirection = portalRotationalDifference * playerCamera.forward;
 
-        Debug.Log(newCameraDirection);
+        // Debug.Log(transform.rotation);
 
 		transform.rotation = Quaternion.LookRotation(newCameraDirection, Vector3.up);
     }

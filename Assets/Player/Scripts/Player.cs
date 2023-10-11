@@ -35,27 +35,27 @@ public class Player : MonoBehaviour
         characterController = GetComponent<CharacterController>();
     }
 
-    // void FixedUpdate() {
-    //     //we update the state
+    void FixedUpdate() {
+        //we update the state
         
 
-    //     switch(state) {
-    //         case "grounded":
-    //             physics();
-    //             break;
-    //         case "inair":
-    //             physics();
-    //             break;
-    //         default:
-    //             break;
-    //     }
+        switch(state) {
+            case "grounded":
+                physics();
+                break;
+            case "inair":
+                physics();
+                break;
+            default:
+                break;
+        }
         
-    //     characterController.Move(velocity);
+        characterController.Move(velocity);
         
-    //     if(state == "grounded" || state == "inair") {
-    //         state = characterController.isGrounded ? "grounded" : "inair";
-    //     }
-    // }
+        if(state == "grounded" || state == "inair") {
+            state = characterController.isGrounded ? "grounded" : "inair";
+        }
+    }
 
     void Update()
     {
@@ -125,17 +125,17 @@ public class Player : MonoBehaviour
 
     void physics() {
         //horizontal velocity drain rate
-        float drate;
+        // float drate;
         if (!characterController.isGrounded) { //This code modifies the accumulator moveDirection.y, allowing jumping and falling properly
             velocity.y -= gravity;
-            drate = 0.01f;
+            // drate = 0.01f;
         } else {
             velocity.y = -0.1f;
-            drate = 0.3f;
+            // drate = 0.3f;
         }
 
-        velocity.x *= 1.0f - drate;
-        velocity.z *= 1.0f - drate;
+        // velocity.x *= 1.0f - drate;
+        // velocity.z *= 1.0f - drate;
     
         // velocity.x = ;
         // velocity.z = ;
