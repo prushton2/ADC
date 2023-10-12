@@ -27,29 +27,38 @@ public class portalcamera : MonoBehaviour
         distanceOffset = otherPortal.transform.InverseTransformPoint(playerCamera.position);// - otherPortal.position;
         transform.localPosition = new Vector3(-distanceOffset.x, distanceOffset.y, -distanceOffset.z);
 
+
+        // distanceOffset = otherPortal.position - playerCamera.position;
+        // transform.position = thisPortal.position + distanceOffset;
+
         //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-        portalRotationalDifference = otherPortal.transform.InverseTransformDirection(playerCamera.forward);
+        // portalRotationalDifference = otherPortal.transform.InverseTransformDirection(playerCamera.forward);
         // portalRotationalDifference += (thisPortal.rotation * Quaternion.Inverse(otherPortal.rotation)).eulerAngles;
         
-        Quaternion cameraDirection = Quaternion.Euler(new Vector3(portalRotationalDifference.x * 180, portalRotationalDifference.y * 180 + 180f, portalRotationalDifference.z * 180));
+        // Quaternion cameraDirection = Quaternion.Euler(new Vector3(portalRotationalDifference.x * 180, portalRotationalDifference.y * 180 + 180f, portalRotationalDifference.z * 180));
         
-        transform.localRotation = Quaternion.Euler(playerCamera.forward); //cameraDirection;
+        // transform.localRotation = portalRotationalDifference;//Quaternion.Euler(playerCamera.forward); //cameraDirection;
 
         //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-        // angularDifferenceBetweenPortalRotations = Quaternion.Angle(thisPortal.rotation, otherPortal.rotation);
+        float angularDifferenceBetweenPortalRotations = Quaternion.Angle(thisPortal.rotation, otherPortal.rotation);
         // Debug.Log(angularDifferenceBetweenPortalRotations);
 
-		// Quaternion portalRotationalDifference = Quaternion.AngleAxis(angularDifferenceBetweenPortalRotations, Vector3.up);
+		Quaternion portalRotationalDifference = Quaternion.AngleAxis(angularDifferenceBetweenPortalRotations, Vector3.up);
 
         // // Debug.Log(portalRotationalDifference * new Vector3(1f, 1f, 1f));
 
-		// Vector3 newCameraDirection = portalRotationalDifference * -playerCamera.forward;
-        // newCameraDirection.y *= -1;
+		Vector3 newCameraDirection = portalRotationalDifference * -playerCamera.forward;
+        newCameraDirection.y *= -1;
 
         // // Debug.Log(transform.rotation);
-		// transform.rotation = Quaternion.LookRotation(newCameraDirection, Vector3.up);
+		transform.rotation = Quaternion.LookRotation(newCameraDirection, Vector3.up);
+
+
+        transform.RotateAround(thisPortal.position, thisPortal.up, 180);
+
+
         //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     }
 }
