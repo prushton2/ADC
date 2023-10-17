@@ -10,6 +10,8 @@ public class PortalController : Executable
     public Material cameraMatA;
     public Material cameraMatB;
 
+    public Material noPortal;
+
     public GameObject LinkA;
     public GameObject LinkB;
 
@@ -72,8 +74,8 @@ public class PortalController : Executable
         //set the camA's target texture to a new render texture based on the screen size and set Camera Mat A's texture to the render texture
 
         //set the portal's plane's material to the other portals material
-        portalA.transform.GetChild(2).gameObject.GetComponent<Renderer>().material = null;
-        portalB.transform.GetChild(2).gameObject.GetComponent<Renderer>().material = null;
+        portalA.transform.GetChild(2).gameObject.GetComponent<Renderer>().material = noPortal;
+        portalB.transform.GetChild(2).gameObject.GetComponent<Renderer>().material = noPortal;
         //Link the teleporter scripts
         portalA.transform.GetChild(3).gameObject.GetComponent<portalTeleporter>().otherPortal = null;
         portalB.transform.GetChild(3).gameObject.GetComponent<portalTeleporter>().otherPortal = null;

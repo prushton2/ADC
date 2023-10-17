@@ -559,6 +559,7 @@ MonoBehaviour:
   state: unlinked
   cameraMatA: {fileID: 2100000, guid: 0c48a2db168821344b39755fdb68ff06, type: 2}
   cameraMatB: {fileID: 2100000, guid: f81594d279989a949a4f1a44d63b818d, type: 2}
+  noPortal: {fileID: 2100000, guid: 742b20732f43900428a743b84374eb1e, type: 2}
   LinkA: {fileID: 1389692697}
   LinkB: {fileID: 764549800}
 --- !u!1 &219978720
@@ -5181,7 +5182,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f81594d279989a949a4f1a44d63b818d, type: 2}
+  - {fileID: 2100000, guid: 742b20732f43900428a743b84374eb1e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5279,7 +5280,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f81594d279989a949a4f1a44d63b818d, type: 2}
+  - {fileID: 2100000, guid: 742b20732f43900428a743b84374eb1e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6842,7 +6843,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f81594d279989a949a4f1a44d63b818d, type: 2}
+  - {fileID: 2100000, guid: 742b20732f43900428a743b84374eb1e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
