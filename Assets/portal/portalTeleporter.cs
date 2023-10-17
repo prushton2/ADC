@@ -15,8 +15,7 @@ public class portalTeleporter : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Portal ran2");
-        
+        // Debug.Log("Portal ran2");
     }
 
     void FixedUpdate() {
@@ -35,7 +34,7 @@ public class portalTeleporter : MonoBehaviour
     */
 
     private void OnTriggerEnter(Collider col) {
-        Debug.Log("Portal ran");
+        // Debug.Log("Portal ran");
         if(disableTravel) {
             return;
         }
@@ -44,11 +43,8 @@ public class portalTeleporter : MonoBehaviour
         }
         
 
-        Vector3 distanceOffset = transform.parent.position - otherPortal.transform.position;
 
-        float angularDifferenceBetweenPortalRotations = Quaternion.Angle(transform.rotation, otherPortal.transform.rotation);
 
-		Quaternion portalRotationalDifference = Quaternion.AngleAxis(angularDifferenceBetweenPortalRotations, Vector3.up);
 		// Vector3 newCameraDirection = portalRotationalDifference * playerCamera.forward;
 		// transform.rotation = Quaternion.LookRotation(newCameraDirection, Vector3.up);
         
@@ -56,7 +52,14 @@ public class portalTeleporter : MonoBehaviour
         otherPortal.transform.GetChild(3).GetComponent<portalTeleporter>().timer = 30;
         
         col.gameObject.GetComponent<CharacterController>().enabled = false;
+
+        Vector3 distanceOffset = transform.parent.position - otherPortal.transform.position;
         col.gameObject.transform.position -= distanceOffset;
+
+        Vector3 portalRotationalDifference = otherPortal.transform.eulerAngles - transform.eulerAngles;
+        Quaternion lookdir = Quaternion.LookRotation(col.gameObject.transform.forward, Vector3.up);
+        col.gameObject.transform.eulerAngles = lookdir.eulerAngles + new Vector3(0, 180, 0) + portalRotationalDifference;
+
         col.gameObject.GetComponent<CharacterController>().enabled = true;
 
 
