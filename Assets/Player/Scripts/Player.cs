@@ -90,8 +90,7 @@ public class Player : MonoBehaviour
     }
 
     void look() {
-        deltaX += Input.GetAxisRaw("Mouse X") * 4;
-        transform.rotation = Quaternion.Euler(0, Sensitivity*deltaX, 0);
+        transform.eulerAngles += new Vector3(0, Input.GetAxisRaw("Mouse X"), 0);
     }
 
     void wasd() {
