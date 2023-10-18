@@ -24,7 +24,7 @@ public class PortalController : Executable
         
         for(int i = 0; i<Portals.Length; i++) {
             portalHashes[i] = String.Format("{0:X6}", rng.Next(0x1000000));
-            Portals[i].transform.GetChild(5).GetComponent<TMP_Text>().text = portalHashes[i];
+            Portals[i].transform.GetChild(4).GetComponent<TMP_Text>().text = portalHashes[i];
         }
         
     }
