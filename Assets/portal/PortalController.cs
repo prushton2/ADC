@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class PortalController : Executable
 {
-    // Start is called before the first frame update
-
-    // public Camera cameraB;
+    
     public Material cameraMatA;
     public Material cameraMatB;
 
@@ -14,11 +12,6 @@ public class PortalController : Executable
 
     public GameObject LinkA;
     public GameObject LinkB;
-
-    // public GameObject Portal1;
-    // public GameObject Portal2;
-    // public GameObject Portal3;
-
 
     void FixedUpdate()
     {
