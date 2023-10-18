@@ -35,27 +35,23 @@ public class Player : MonoBehaviour
         characterController = GetComponent<CharacterController>();
     }
 
-    void FixedUpdate() {
-        //we update the state
+    // void FixedUpdate() {
+    //     //we update the state
         
 
-        switch(state) {
-            case "grounded":
-                physics();
-                break;
-            case "inair":
-                physics();
-                break;
-            default:
-                break;
-        }
+    //     switch(state) {
+    //         case "grounded":
+    //             physics();
+    //             break;
+    //         case "inair":
+    //             physics();
+    //             break;
+    //         default:
+    //             break;
+    //     }
         
-        characterController.Move(velocity);
         
-        if(state == "grounded" || state == "inair") {
-            state = characterController.isGrounded ? "grounded" : "inair";
-        }
-    }
+    // }
 
     void Update()
     {
@@ -65,7 +61,7 @@ public class Player : MonoBehaviour
 
         //update this here instead because fast
 
-        //We put user-critical things here, things the user controls. This has a higher refresh rate, and the movement is accurate at low frame rates
+        //We put user-critical things here, things the user controls. This has a higher refresh rate
         switch (state) {
             case "grounded":
                 look();
@@ -86,7 +82,13 @@ public class Player : MonoBehaviour
             default:
                 break;
         }
-
+        
+        physics();
+        characterController.Move(velocity * Time.deltaTime);
+        
+        if(state == "grounded" || state == "inair") {
+            state = characterController.isGrounded ? "grounded" : "inair";
+        }
     }
 
     void look() {
