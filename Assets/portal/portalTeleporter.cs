@@ -15,7 +15,7 @@ public class portalTeleporter : MonoBehaviour
 
     void Start()
     {
-        // Debug.Log("Portal ran2");
+
     }
 
     void FixedUpdate() {
@@ -42,9 +42,6 @@ public class portalTeleporter : MonoBehaviour
             return;
         }
         
-
-
-
 		// Vector3 newCameraDirection = portalRotationalDifference * playerCamera.forward;
 		// transform.rotation = Quaternion.LookRotation(newCameraDirection, Vector3.up);
         
@@ -61,8 +58,6 @@ public class portalTeleporter : MonoBehaviour
         col.gameObject.transform.eulerAngles = lookdir.eulerAngles + new Vector3(0, 180, 0) + portalRotationalDifference;
 
         col.gameObject.GetComponent<CharacterController>().enabled = true;
-
-
 
     }
     void onTriggerExit() {

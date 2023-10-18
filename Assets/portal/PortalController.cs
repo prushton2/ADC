@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using TMPro;
 
 public class PortalController : Executable
 {
@@ -13,13 +15,28 @@ public class PortalController : Executable
     public GameObject LinkA;
     public GameObject LinkB;
 
+    public GameObject[] Portals;
+
+    public String[] portalHashes = new String[3];
+
+    void Start() {
+        System.Random rng = new System.Random();
+        
+        for(int i = 0; i<Portals.Length; i++) {
+            portalHashes[i] = String.Format("{0:X6}", rng.Next(0x1000000));
+            Portals[i].transform.GetChild(5).GetComponent<TMP_Text>().text = portalHashes[i];
+        }
+        
+    }
+
+
     void FixedUpdate()
     {
-        if(Input.GetKey("i")) {
-            setLink(LinkA, LinkB);
-        } else if (Input.GetKey("o")) {
-            unlink(LinkA, LinkB);
-        }
+        // if(Input.GetKey("i")) {
+        //     setLink(LinkA, LinkB);
+        // } else if (Input.GetKey("o")) {
+        //     unlink(LinkA, LinkB);
+        // }
     }
 
     void setLink(GameObject portalA, GameObject portalB) {
@@ -69,12 +86,37 @@ public class PortalController : Executable
         //set the portal's plane's material to the other portals material
         portalA.transform.GetChild(2).gameObject.GetComponent<Renderer>().material = noPortal;
         portalB.transform.GetChild(2).gameObject.GetComponent<Renderer>().material = noPortal;
-        //Link the teleporter scripts
+        //Link the teleporter sc`ripts
         portalA.transform.GetChild(3).gameObject.GetComponent<portalTeleporter>().otherPortal = null;
         portalB.transform.GetChild(3).gameObject.GetComponent<portalTeleporter>().otherPortal = null;
     }
 
     public override string execute(string[] args) {
-        return "";
+        Debug.Log(args);
+        if(args[1] == "link") {
+
+            if(state == "Linked") {
+                return "Cannot link when a link already exists.\nUse unlink to remove the link\n";
+            }
+
+            for(int i = 0; i<portalHashes.Length; i++) {
+                if(portalHashes[i] == args[2].ToUpper()) {
+                    LinkA = Portals[i];
+                }
+
+                if(portalHashes[i] == args[3].ToUpper()) {
+                    LinkB = Portals[i];
+                }
+            }
+
+            setLink(LinkA, LinkB);
+            state = "Linked";
+            return "Link Made\n";
+        } else if(args[1] == "unlink") {
+            unlink(LinkA, LinkB);
+            state = "Unlinked";
+            return "Link Destroyed\n";
+        }
+        return "Invalid Command\n";
     }
 }
