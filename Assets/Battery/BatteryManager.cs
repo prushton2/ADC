@@ -25,8 +25,8 @@ public class BatteryManager : MonoBehaviour
 
 
         if(gameObject.GetComponent<PortalController>().LinkB != null) {
-            Debug.Log(draw(0.1f));
-            
+            Debug.Log(draw(0.01f));
+
             if(totalMWh == 0) {
                 gameObject.GetComponent<PortalController>().unlink(gameObject.GetComponent<PortalController>().LinkA, gameObject.GetComponent<PortalController>().LinkB);
             }
