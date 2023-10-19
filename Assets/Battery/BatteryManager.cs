@@ -8,6 +8,7 @@ public class BatteryManager : MonoBehaviour
 
     public float totalMWh = 0;
     public BatteryRecepticle[] recepticles = new BatteryRecepticle[2];
+    public float portalPowerDraw = 0.001f;
 
     void Start()
     {
@@ -25,7 +26,7 @@ public class BatteryManager : MonoBehaviour
 
 
         if(gameObject.GetComponent<PortalController>().LinkB != null) {
-            Debug.Log(draw(0.01f));
+            Debug.Log(draw(portalPowerDraw));
 
             if(totalMWh == 0) {
                 gameObject.GetComponent<PortalController>().unlink(gameObject.GetComponent<PortalController>().LinkA, gameObject.GetComponent<PortalController>().LinkB);

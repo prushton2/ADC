@@ -10,6 +10,7 @@ public class Battery : Interactable
     public Material emptyMat;
 
     public override void interact(GameObject go) {
+        itemname = "Battery";
         go.GetComponent<Inventory>().pickup(transform.gameObject);
     }
 
