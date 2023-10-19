@@ -128,7 +128,7 @@ public class Player : MonoBehaviour
         //horizontal velocity drain rate
         // float drate;
         if (!characterController.isGrounded) { //This code modifies the accumulator moveDirection.y, allowing jumping and falling properly
-            velocity.y -= gravity;
+            velocity.y -= gravity * Time.deltaTime;
             // drate = 0.01f;
         } else {
             velocity.y = -0.1f;
