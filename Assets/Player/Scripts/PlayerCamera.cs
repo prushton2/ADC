@@ -17,6 +17,7 @@ public class PlayerCamera : MonoBehaviour {
     private GameObject mgr;
 
     public int interactRange = 3;
+    public bool justInteracted = false;
 
     void Start () {
         // healthBar = canvas.transform.Find("HealthBar").gameObject;
@@ -43,9 +44,16 @@ public class PlayerCamera : MonoBehaviour {
 
         RaycastHit destination;
 
-        if(Input.GetKey("e")) {
+        if(Input.GetKey("e") && !justInteracted) {
             Physics.Raycast(transform.position, transform.forward, out destination, this.interactRange, ~0);
-            destination.transform.gameObject.GetComponent<Interactable>().interact(playerScript.gameObject);
+            try {
+                destination.transform.gameObject.GetComponent<Interactable>().interact(playerScript.gameObject);
+                justInteracted = true;
+            } catch {}
+        }
+
+        if(!Input.GetKey("e")) {
+            justInteracted = false;
         }
 
     }
