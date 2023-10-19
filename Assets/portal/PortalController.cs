@@ -39,7 +39,7 @@ public class PortalController : Executable
         // }
     }
 
-    void setLink(GameObject portalA, GameObject portalB) {
+    public void setLink(GameObject portalA, GameObject portalB) {
         
         //set the other portals
         portalA.transform.GetChild(0).gameObject.GetComponent<portalcamera>().otherPortal = portalB.transform;
@@ -70,7 +70,7 @@ public class PortalController : Executable
         portalB.transform.GetChild(3).gameObject.GetComponent<portalTeleporter>().otherPortal = portalA;
     }
 
-    void unlink(GameObject portalA, GameObject portalB) {
+    public void unlink(GameObject portalA, GameObject portalB) {
         //set the other portals
         portalA.transform.GetChild(0).gameObject.GetComponent<portalcamera>().otherPortal = null;
         portalB.transform.GetChild(0).gameObject.GetComponent<portalcamera>().otherPortal = null;
@@ -89,6 +89,9 @@ public class PortalController : Executable
         //Link the teleporter sc`ripts
         portalA.transform.GetChild(3).gameObject.GetComponent<portalTeleporter>().otherPortal = null;
         portalB.transform.GetChild(3).gameObject.GetComponent<portalTeleporter>().otherPortal = null;
+
+        LinkA = null;
+        LinkB = null;
     }
 
     public override string execute(string[] args) {

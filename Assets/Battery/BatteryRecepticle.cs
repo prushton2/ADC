@@ -9,11 +9,17 @@ public class BatteryRecepticle : Interactable
     public float MWh = 0f;
 
     void FixedUpdate() {
-        if(MWh <= 0f) {
-            MWh = 0f;
-            currentBattery.GetComponent<Battery>().MWh = 0f;
+
+        //only update stuff regarding the battery if there is one
+        if(currentBattery != null) {
+
+            if(MWh <= 0f) { //set it to empty so the texture updates
+                MWh = 0f;
+                currentBattery.GetComponent<Battery>().MWh = 0f;
+            }
+            currentBattery.GetComponent<Battery>().updateTexture();
         }
-        currentBattery.GetComponent<Battery>().updateTexture();
+
         transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = string.Format("{0:N0}MWh", MWh);
     }
 

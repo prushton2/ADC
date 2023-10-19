@@ -445,7 +445,7 @@ MonoBehaviour:
   cameraMatA: {fileID: 2100000, guid: 0c48a2db168821344b39755fdb68ff06, type: 2}
   cameraMatB: {fileID: 2100000, guid: f81594d279989a949a4f1a44d63b818d, type: 2}
   noPortal: {fileID: 2100000, guid: 742b20732f43900428a743b84374eb1e, type: 2}
-  LinkA: {fileID: 1389692697}
+  LinkA: {fileID: 0}
   LinkB: {fileID: 0}
   Portals:
   - {fileID: 1389692697}

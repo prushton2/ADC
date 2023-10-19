@@ -22,6 +22,16 @@ public class BatteryManager : MonoBehaviour
             total += recepticles[i].MWh;
         }
         totalMWh = total;
+
+
+        if(gameObject.GetComponent<PortalController>().LinkB != null) {
+            Debug.Log(draw(0.1f));
+            
+            if(totalMWh == 0) {
+                gameObject.GetComponent<PortalController>().unlink(gameObject.GetComponent<PortalController>().LinkA, gameObject.GetComponent<PortalController>().LinkB);
+            }
+        }
+
     }
 
     public int draw(float MW) {
@@ -40,7 +50,7 @@ public class BatteryManager : MonoBehaviour
 
 
         for(int i = 0; i<recepticles.Length; i++) {
-            if(recepticles[i].MWh == 0) {
+            if(recepticles[i].MWh != 0) {
                 recepticles[i].drawPower(MW/recepticlesWithPower);
             }
         }
