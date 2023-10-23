@@ -84,16 +84,8 @@ public class Computer : Interactable
     }
 
     void enter() {
-        string res = runCommand(command);
-        // prevText += ">" + command + "\n" + res;
-        commandOutput = res;
+        commandOutput = runCommand(command);
         prevCommand = command;
-
-        if(res == "clear\n") {
-            commandOutput = "";
-        }
-
-        // TMP.text = prevText + ">";
         command = "";
     }
 
@@ -128,16 +120,6 @@ public class Computer : Interactable
         return returnString;
 
     }
-
-    
-    // public static T[] SubArray<T>(this T[] data, int index, int length)
-    // {
-    //     T[] result = new T[length];
-    //     Array.Copy(data, index, result, 0, length);
-    //     return result;
-    // }
-
-
     /*
     I am ashamed to write this. This is the code I would have wrote given this problem in 2018 (thats not a good thing)
     The reason I have to is because Unity provides no better way to make a custom textbox than this.
