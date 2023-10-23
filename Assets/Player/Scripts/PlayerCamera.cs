@@ -12,7 +12,7 @@ public class PlayerCamera : MonoBehaviour {
     public GameObject healthBar;
 
     public Transform player;
-    float ChgInY = 0;
+    public float deltaY = 0;
     public double viewHeight = 1.5;
     private GameObject mgr;
 
@@ -30,10 +30,18 @@ public class PlayerCamera : MonoBehaviour {
             return;
         }
 
-        ChgInY += Input.GetAxisRaw("Mouse Y");
-        ChgInY = Math.Clamp(ChgInY, -90, 90);
-        
-        transform.rotation = Quaternion.Euler(-ChgInY, player.transform.rotation.eulerAngles.y, 0);        
+        // transform.eulerAngles += new Vector3(-Input.GetAxisRaw("Mouse Y") * playerScript.Sensitivity, 0, 0);
+
+
+        deltaY = transform.eulerAngles.x + -Input.GetAxisRaw("Mouse Y") * playerScript.Sensitivity;
+        deltaY = deltaY > 180 ? deltaY -= 360 : deltaY;
+
+        transform.eulerAngles = new Vector3(
+            Math.Clamp(deltaY, -90, 90),
+            transform.eulerAngles.y, 
+            transform.eulerAngles.z
+        );
+   
     }
 
     void FixedUpdate() {

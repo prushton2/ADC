@@ -66,12 +66,11 @@ public class Player : MonoBehaviour
     }
 
     void look() {
-        transform.eulerAngles += new Vector3(0, Input.GetAxisRaw("Mouse X"), 0);
+        transform.eulerAngles += new Vector3(0, Input.GetAxisRaw("Mouse X") * Sensitivity, 0);
     }
 
     void wasd() {
         moveDirection = Vector3.zero; //.x = 0;
-        // moveDirection.z = 0;
 
         if (Input.GetKey("w")) {
             moveDirection.x += transform.forward.x*speed*Time.deltaTime;
