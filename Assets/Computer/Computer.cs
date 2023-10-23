@@ -9,9 +9,18 @@ public class Computer : Interactable
 
     public GameObject interactor = null;
     public TMP_Text TMP = null;
-    public string command = "";
-    public string prevText = "";
 
+    public string prevCommand = "";
+    public string commandOutput = "";
+    public string command = "";
+    public string cursor = "_";
+
+    private string cursorInternal = "";
+
+    public int cursorTimer = 60;
+    private int cursorTimerInternal = 0;
+
+    private bool skipNext = false;
     public GameObject[] findables;
 
     public Executable[] executables;
@@ -26,6 +35,12 @@ public class Computer : Interactable
         if(interactor == null) {
             return;
         }
+
+        if(skipNext) {
+            skipNext = false;
+            return;
+        }
+
         
         if(Input.GetKey(KeyCode.Escape)) {
             interactor.GetComponent<Player>().movementLocked = false;
@@ -37,32 +52,48 @@ public class Computer : Interactable
         //This is also shameful, but it works. If Unity isnt going to implement basic features, im not going to optimize my code.
         if(Input.anyKeyDown) {
             
-            if(Input.GetKey(KeyCode.Space)) {
+            if(Input.GetKeyDown(KeyCode.Space)) {
                 command = command + " ";
-            } else if(Input.GetKey(KeyCode.Return)) {
+            } else if(Input.GetKeyDown(KeyCode.Return)) {
                 enter();
                 return;
-            } else if(Input.GetKey(KeyCode.Backspace)) {
+            } else if(Input.GetKeyDown(KeyCode.Backspace)) {
                 command = command.Remove(command.Length - 1);
             } else {
                 command = command + getLetterPressed();
             }
-
-            TMP.text = prevText + ">" + command;
         }
 
+        if(prevCommand == "") {
+            TMP.text = ">" + command + cursorInternal;
+        } else {
+            TMP.text = ">" + prevCommand + "\n" + commandOutput + ">" + command + cursorInternal;
+        }
+    }
+
+    void FixedUpdate() {
+        cursorTimerInternal++;
+
+        if(cursorTimerInternal > cursorTimer) {
+            cursorInternal = cursor;
+        } else {
+            cursorInternal = "";
+        }
+
+        cursorTimerInternal %= cursorTimer*2;
     }
 
     void enter() {
         string res = runCommand(command);
         // prevText += ">" + command + "\n" + res;
-        prevText = ">" + command + "\n" + res;
+        commandOutput = res;
+        prevCommand = command;
 
         if(res == "clear\n") {
-            prevText = "";
+            commandOutput = "";
         }
 
-        TMP.text = prevText + ">";
+        // TMP.text = prevText + ">";
         command = "";
     }
 
@@ -117,7 +148,7 @@ public class Computer : Interactable
     */
     string getLetterPressed() {
         //Why cant i split a string on nothing like python?
-        string[] lettersToRead = "q w e r t y u i o p a s d f g h j k l z x c v b n m ` 1 2 3 4 5 6 7 8 9 0 - = ~ ! @ # $ % ^ & * ( ) _ + [ ] { } ; ' : \" , . / < > ? \\ | ".Split(" ");
+        string[] lettersToRead = "q w e r t y u i o p a s d f g h j k l z x c v b n m ` 1 2 3 4 5 6 7 8 9 0 - = ~ ! @ # $ % ^ & * ( ) _ + [ ] { } ; ' : \" , . / < > ? \\".Split(" ");
 
         for(int i = 0; i<lettersToRead.Length; i++) {
             if(Input.GetKeyDown(lettersToRead[i])) {
@@ -131,6 +162,7 @@ public class Computer : Interactable
     public override void interact(GameObject interactor) {
         interactor.GetComponent<Player>().movementLocked = true;
         this.interactor = interactor;
+        skipNext = true;
     }
 
 
