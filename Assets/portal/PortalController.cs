@@ -76,6 +76,7 @@ public class PortalController : Executable
         //Link the teleporter scripts
         portalA.transform.Find("back").gameObject.GetComponent<portalTeleporter>().otherPortal = portalB;
         portalB.transform.Find("back").gameObject.GetComponent<portalTeleporter>().otherPortal = portalA;
+        state = "Linked";
     }
 
     public void unlink(GameObject portalA, GameObject portalB) {
@@ -103,14 +104,22 @@ public class PortalController : Executable
 
         LinkA = null;
         LinkB = null;
+        state = "Unlinked";
     }
 
     public override string execute(string[] args) {
-        Debug.Log(args);
+        if(args.Length < 2) {
+            return "Status: "+state+"\nPortals require power to operate\n";
+        }
+
         if(args[1] == "link") {
 
             if(state == "Linked") {
                 return "Cannot link when a link already exists.\nUse unlink to remove the link\n";
+            }
+
+            if(args.Length < 4) {
+                return "Please enter the ID hashes of the portals to link\n";
             }
 
             for(int i = 0; i<portalHashes.Length; i++) {
@@ -124,11 +133,9 @@ public class PortalController : Executable
             }
 
             setLink(LinkA, LinkB);
-            state = "Linked";
             return "Link Made\n";
         } else if(args[1] == "unlink") {
             unlink(LinkA, LinkB);
-            state = "Unlinked";
             return "Link Destroyed\n";
         }
         return "Invalid Command\n";
