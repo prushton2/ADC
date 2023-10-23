@@ -29,6 +29,11 @@ public class TextEntry : MonoBehaviour
     {
 
         if(Input.GetKeyDown(KeyCode.Return)) {
+
+            if(player.movementLocked && !typingEnabled) { //scuffed way to detect if the playerlock is caused by the text entry or not. If not, we return
+                return;
+            }
+            
             typingEnabled = !typingEnabled;
             player.movementLocked = typingEnabled;
 
@@ -52,7 +57,7 @@ public class TextEntry : MonoBehaviour
             return;
         }
 
-        current.text = currentText + cursorInternal;
+        current.text = ">" + currentText + cursorInternal;
         
         if(Input.anyKeyDown) {
             
