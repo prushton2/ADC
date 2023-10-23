@@ -1,0 +1,15 @@
+- glow to show whats interactable
+- capitalize shit when typing
+- make ls more clear
+	- make it into a command list
+	- make the command documentation clearer
+	- change id hash to id
+	- for portal hash error message, make it clearer you need both
+- enter sometimes doesnt work when error
+- change door: open to door open
+- is lex stupid for not seeing the ping command???
+- door abbreviations are dumb make them useful
+	- make it make more sense somehow
+- no surrounding awareness lmao (make colors or smth)
+	- refer to colors of room for door names
+- straighten out spawn hall

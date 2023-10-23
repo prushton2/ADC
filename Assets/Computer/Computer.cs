@@ -155,7 +155,7 @@ public class Computer : Interactable
         string output;
 
         if(cmd.Length == 1) {
-            output = "Objects you can locate:";
+            output = "Use ping (object) to locate something\nObjects you can locate:";
             for(int i = 0; i<findables.Length; i++) {
                 output += "\n" + findables[i].name.ToLower().Replace(" ", "-");
             }
