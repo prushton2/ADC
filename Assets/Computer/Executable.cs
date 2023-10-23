@@ -23,4 +23,8 @@ public class Executable : MonoBehaviour
     public virtual string execute(string[] args) {
         return "";
     }
+
+    public virtual Vector3 getPos() {
+        return transform.position;
+    }
 }

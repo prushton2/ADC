@@ -12,7 +12,10 @@ public class Computer : Interactable
     public string command = "";
     public string prevText = "";
 
+    public GameObject[] findables;
+
     public Executable[] executables;
+
 
     // Start is called before the first frame update
     void Start() {}
@@ -74,7 +77,9 @@ public class Computer : Interactable
                 }
                 break;
 
-            
+            case "ping":
+                returnString += fn_ping(cmd) + "\n";
+                break;
             
             default:
 
@@ -123,9 +128,45 @@ public class Computer : Interactable
         return null;
     }
 
-    public override void  interact(GameObject interactor) {
+    public override void interact(GameObject interactor) {
         interactor.GetComponent<Player>().movementLocked = true;
         this.interactor = interactor;
+    }
+
+
+    private string fn_ping(string[] cmd) {
+
+        string output;
+
+        if(cmd.Length == 1) {
+            output = "Objects you can locate:";
+            for(int i = 0; i<findables.Length; i++) {
+                output += "\n" + findables[i].name.ToLower().Replace(" ", "-");
+            }
+            return output;
+        }
+        
+        output = "Object is close to:";
+
+        GameObject findable = null;
+
+        for(int i = 0; i<findables.Length; i++) {
+            if(findables[i].name.ToLower().Replace(" ", "-") == cmd[1]) {
+                findable = findables[i];
+                break;
+            }
+        }
+
+        if(findable == null) {
+            output = "Object doesnt exist";
+            return output;
+        }
+
+        for(int i = 0; i<executables.Length; i++) {
+            output += "\n" + executables[i].exeName + " : " + (int)(Vector3.Distance(executables[i].getPos(), findable.transform.position)) + "m";
+        }
+
+        return output;
     }
     
 }

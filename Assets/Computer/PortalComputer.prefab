@@ -414,6 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 974c594428e772e498d24a5a6c557ff9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemname: item.name
   interactor: {fileID: 0}
   TMP: {fileID: 8430986807947829864}
   command: 

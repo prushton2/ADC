@@ -7,6 +7,8 @@ public class Inventory : MonoBehaviour
 {
     // Start is called before the first frame update
 
+    public Player player;
+
     public GameObject[] inventory = new GameObject[8];
     public GameObject hotbar;
     public int selectIndex = 0;
@@ -18,11 +20,16 @@ public class Inventory : MonoBehaviour
     void Start()
     {
         selectionBox = hotbar.transform.GetChild(0).GetChild(0).gameObject;
+        player = gameObject.GetComponent<Player>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(player.movementLocked) {
+            return;
+        }
+
         if(Input.GetKeyDown("g")) {
             inventory[selectIndex].transform.localPosition = new Vector3(0, -1.25f, 0) - transform.forward;
             inventory[selectIndex].SetActive(true);
