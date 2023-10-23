@@ -26,6 +26,10 @@ public class PortalController : Executable
             portalHashes[i] = String.Format("{0:X6}", rng.Next(0x1000000));
             Portals[i].transform.GetChild(4).GetComponent<TMP_Text>().text = portalHashes[i];
         }
+
+        if(state == "Linked") {
+            setLink(LinkA, LinkB);
+        }
         
     }
 
@@ -42,12 +46,12 @@ public class PortalController : Executable
     public void setLink(GameObject portalA, GameObject portalB) {
         
         //set the other portals
-        portalA.transform.GetChild(0).gameObject.GetComponent<portalcamera>().otherPortal = portalB.transform;
-        portalB.transform.GetChild(0).gameObject.GetComponent<portalcamera>().otherPortal = portalA.transform;
+        portalA.transform.Find("cam").gameObject.GetComponent<portalcamera>().otherPortal = portalB.transform;
+        portalB.transform.Find("cam").gameObject.GetComponent<portalcamera>().otherPortal = portalA.transform;
         
         //reference cameras
-        Camera camA = portalA.transform.GetChild(0).gameObject.GetComponent<Camera>();
-        Camera camB = portalB.transform.GetChild(0).gameObject.GetComponent<Camera>();
+        Camera camA = portalA.transform.Find("cam").gameObject.GetComponent<Camera>();
+        Camera camB = portalB.transform.Find("cam").gameObject.GetComponent<Camera>();
 
         //remove any target textures they may have
         if(camA.targetTexture != null) { camA.targetTexture.Release(); }
@@ -62,33 +66,40 @@ public class PortalController : Executable
         cameraMatB.mainTexture = camB.targetTexture;
 
         //set the portal's plane's material to the other portals material
-        portalA.transform.GetChild(2).gameObject.GetComponent<Renderer>().material = cameraMatB;
-        portalB.transform.GetChild(2).gameObject.GetComponent<Renderer>().material = cameraMatA;
+
+        portalA.transform.Find("plane").gameObject.SetActive(true);
+        portalB.transform.Find("plane").gameObject.SetActive(true);
+
+        portalA.transform.Find("plane").gameObject.GetComponent<Renderer>().material = cameraMatB;
+        portalB.transform.Find("plane").gameObject.GetComponent<Renderer>().material = cameraMatA;
 
         //Link the teleporter scripts
-        portalA.transform.GetChild(3).gameObject.GetComponent<portalTeleporter>().otherPortal = portalB;
-        portalB.transform.GetChild(3).gameObject.GetComponent<portalTeleporter>().otherPortal = portalA;
+        portalA.transform.Find("back").gameObject.GetComponent<portalTeleporter>().otherPortal = portalB;
+        portalB.transform.Find("back").gameObject.GetComponent<portalTeleporter>().otherPortal = portalA;
     }
 
     public void unlink(GameObject portalA, GameObject portalB) {
         //set the other portals
-        portalA.transform.GetChild(0).gameObject.GetComponent<portalcamera>().otherPortal = null;
-        portalB.transform.GetChild(0).gameObject.GetComponent<portalcamera>().otherPortal = null;
+        portalA.transform.Find("cam").gameObject.GetComponent<portalcamera>().otherPortal = null;
+        portalB.transform.Find("cam").gameObject.GetComponent<portalcamera>().otherPortal = null;
                 
         //reference cameras
-        Camera camA = portalA.transform.GetChild(0).gameObject.GetComponent<Camera>();
-        Camera camB = portalB.transform.GetChild(0).gameObject.GetComponent<Camera>();
+        Camera camA = portalA.transform.Find("cam").gameObject.GetComponent<Camera>();
+        Camera camB = portalB.transform.Find("cam").gameObject.GetComponent<Camera>();
         //remove any target textures they may have
         if(camA.targetTexture != null) { camA.targetTexture.Release(); }
         if(camB.targetTexture != null) { camB.targetTexture.Release(); }
         //set the camA's target texture to a new render texture based on the screen size and set Camera Mat A's texture to the render texture
 
         //set the portal's plane's material to the other portals material
-        portalA.transform.GetChild(2).gameObject.GetComponent<Renderer>().material = noPortal;
-        portalB.transform.GetChild(2).gameObject.GetComponent<Renderer>().material = noPortal;
+        portalA.transform.Find("plane").gameObject.GetComponent<Renderer>().material = noPortal;
+        portalB.transform.Find("plane").gameObject.GetComponent<Renderer>().material = noPortal;
         //Link the teleporter sc`ripts
-        portalA.transform.GetChild(3).gameObject.GetComponent<portalTeleporter>().otherPortal = null;
-        portalB.transform.GetChild(3).gameObject.GetComponent<portalTeleporter>().otherPortal = null;
+        portalA.transform.Find("back").gameObject.GetComponent<portalTeleporter>().otherPortal = null;
+        portalB.transform.Find("back").gameObject.GetComponent<portalTeleporter>().otherPortal = null;
+
+        portalA.transform.Find("plane").gameObject.SetActive(false);
+        portalB.transform.Find("plane").gameObject.SetActive(false);
 
         LinkA = null;
         LinkB = null;

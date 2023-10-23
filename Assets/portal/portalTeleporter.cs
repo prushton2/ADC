@@ -45,8 +45,8 @@ public class portalTeleporter : MonoBehaviour
 		// Vector3 newCameraDirection = portalRotationalDifference * playerCamera.forward;
 		// transform.rotation = Quaternion.LookRotation(newCameraDirection, Vector3.up);
         
-        otherPortal.transform.GetChild(3).GetComponent<portalTeleporter>().disableTravel = true;
-        otherPortal.transform.GetChild(3).GetComponent<portalTeleporter>().timer = 30;
+        otherPortal.transform.Find("back").GetComponent<portalTeleporter>().disableTravel = true;
+        otherPortal.transform.Find("back").GetComponent<portalTeleporter>().timer = 30;
         
         col.gameObject.GetComponent<CharacterController>().enabled = false;
 

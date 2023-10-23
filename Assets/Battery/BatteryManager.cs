@@ -9,6 +9,7 @@ public class BatteryManager : MonoBehaviour
     public float totalMWh = 0;
     public BatteryRecepticle[] recepticles = new BatteryRecepticle[2];
     public float portalPowerDraw = 0.001f;
+    public bool infinitePower = false;
 
     void Start()
     {
@@ -23,7 +24,10 @@ public class BatteryManager : MonoBehaviour
             total += recepticles[i].MWh;
         }
         totalMWh = total;
-
+        
+        if(infinitePower) {
+            return;
+        }
 
         if(gameObject.GetComponent<PortalController>().LinkB != null) {
             if(totalMWh == 0) {
