@@ -17,7 +17,7 @@ public class TextEntry : MonoBehaviour
     public int cursorTimer = 60;
     private int cursorTimerInternal = 0;
     
-    public bool enabled = false;
+    public bool typingEnabled = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,10 +29,10 @@ public class TextEntry : MonoBehaviour
     {
 
         if(Input.GetKeyDown(KeyCode.Return)) {
-            enabled = !enabled;
-            player.movementLocked = enabled;
+            typingEnabled = !typingEnabled;
+            player.movementLocked = typingEnabled;
 
-            if(!enabled) {
+            if(!typingEnabled) {
                 if(currentText == "/clear") {
                     allText = "";
                     currentText = "";
@@ -43,22 +43,25 @@ public class TextEntry : MonoBehaviour
 
         }
 
-        current.text = currentText + cursorInternal;
         history.text = allText.Replace("\\n", "\n");
 
-        if(!enabled) {
+        if(!typingEnabled) {
             currentText = "";
             cursorInternal = "";
+            current.text = "";
             return;
         }
 
+        current.text = currentText + cursorInternal;
         
         if(Input.anyKeyDown) {
             
             if(Input.GetKeyDown(KeyCode.Space)) {
                 currentText = currentText + " ";
             } else if(Input.GetKeyDown(KeyCode.Backspace)) {
-                currentText = currentText.Remove(currentText.Length - 1);
+                try {
+                    currentText = currentText.Remove(currentText.Length - 1);
+                } catch {}
             } else {
                 currentText = currentText + getLetterPressed();
             }
@@ -68,12 +71,13 @@ public class TextEntry : MonoBehaviour
     void FixedUpdate() {
         if(!enabled) {
             cursorInternal = "";
+            cursorTimerInternal = 0;
             return;
         }
 
         cursorTimerInternal++;
 
-        if(cursorTimerInternal > cursorTimer) {
+        if(cursorTimerInternal < cursorTimer) {
             cursorInternal = cursor;
         } else {
             cursorInternal = "";

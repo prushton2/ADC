@@ -34,6 +34,14 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        physics();
+        characterController.Move(velocity * Time.deltaTime);
+        
+        if(state == "grounded" || state == "inair") {
+            state = characterController.isGrounded ? "grounded" : "inair";
+        }
+
+        
         if(movementLocked) { //needs to be changed sometime soon (its cringe af)
             return;
         }
@@ -55,13 +63,6 @@ public class Player : MonoBehaviour
 
             default:
                 break;
-        }
-        
-        physics();
-        characterController.Move(velocity * Time.deltaTime);
-        
-        if(state == "grounded" || state == "inair") {
-            state = characterController.isGrounded ? "grounded" : "inair";
         }
     }
 

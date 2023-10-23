@@ -58,7 +58,9 @@ public class Computer : Interactable
                 enter();
                 return;
             } else if(Input.GetKeyDown(KeyCode.Backspace)) {
-                command = command.Remove(command.Length - 1);
+                try {
+                    command = command.Remove(command.Length - 1);
+                } catch {}
             } else {
                 command = command + getLetterPressed();
             }
@@ -74,7 +76,7 @@ public class Computer : Interactable
     void FixedUpdate() {
         cursorTimerInternal++;
 
-        if(cursorTimerInternal > cursorTimer) {
+        if(cursorTimerInternal < cursorTimer) {
             cursorInternal = cursor;
         } else {
             cursorInternal = "";
