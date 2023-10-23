@@ -58,7 +58,7 @@ public class Inventory : MonoBehaviour
             selectSlot(4);
         }
 
-        if(Input.GetKeyDown("5")) {
+        if(Input.GetKeyDown("6")) {
             selectSlot(5);
         }
 
