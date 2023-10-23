@@ -80,6 +80,7 @@ public class Inventory : MonoBehaviour
                 inventory[i] = go;
                 go.transform.SetParent(transform);
                 go.SetActive(false);
+                go.transform.position = new Vector3(0,0,0);
                 updateInventoryText();
                 return 0;
             }

@@ -16,7 +16,7 @@ public class RandomPlacer : MonoBehaviour
     }
 
     void Update() {
-        place(choice);
+        // place(choice);
     }
 
     void replace() {
