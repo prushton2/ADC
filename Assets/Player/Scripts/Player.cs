@@ -116,10 +116,10 @@ public class Player : MonoBehaviour
             moveDirection.z += -transform.right.z*speed*Time.deltaTime;
         }
         
-        // if(Input.GetKeyDown("left shift")) {
-        //     state = "dash"; //moveDirection = new Vector3(moveDirection.x * runMultiplier, moveDirection.y, moveDirection.z * runMultiplier);
-        //     stateProgress = 0;
-        // }
+        if(Input.GetKey("left shift")) {
+            moveDirection.x *= 1.5f;
+            moveDirection.z *= 1.5f;
+        }
 
         characterController.Move(moveDirection); //ALL REFERENCES TO MOVEDIRECTION SHOULD INCLUDE TIME.DELTATIME
     }
