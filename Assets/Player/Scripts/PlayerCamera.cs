@@ -20,7 +20,7 @@ public class PlayerCamera : MonoBehaviour {
     public bool justInteracted = false;
 
     void Start () {
-        // healthBar = canvas.transform.Find("HealthBar").gameObject;
+        Cursor.lockState = CursorLockMode.Locked;
         playerScript = transform.parent.GetComponent<Player>();
     }
 
