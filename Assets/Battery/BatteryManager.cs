@@ -29,10 +29,11 @@ public class BatteryManager : MonoBehaviour
             return;
         }
 
-        if(gameObject.GetComponent<PortalController>().LinkB != null) {
+        if(gameObject.GetComponent<PortalController>().state == "Linked") {
             if(totalMWh == 0) {
                 gameObject.GetComponent<PortalController>().unlink(gameObject.GetComponent<PortalController>().LinkA, gameObject.GetComponent<PortalController>().LinkB);
             }
+            draw(portalPowerDraw);
         }
 
     }
