@@ -30,9 +30,6 @@ public class PlayerCamera : MonoBehaviour {
             return;
         }
 
-        // transform.eulerAngles += new Vector3(-Input.GetAxisRaw("Mouse Y") * playerScript.Sensitivity, 0, 0);
-
-
         deltaY = transform.eulerAngles.x + -Input.GetAxisRaw("Mouse Y") * playerScript.Sensitivity;
         deltaY = deltaY > 180 ? deltaY -= 360 : deltaY;
 

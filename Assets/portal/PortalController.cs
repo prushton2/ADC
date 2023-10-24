@@ -6,7 +6,8 @@ using TMPro;
 
 public class PortalController : Executable
 {
-    
+    public GameObject Player;
+
     public Material cameraMatA;
     public Material cameraMatB;
 
@@ -21,7 +22,8 @@ public class PortalController : Executable
 
     void Start() {
         System.Random rng = new System.Random();
-        
+        Player = GameObject.Find("Player");
+
         for(int i = 0; i<Portals.Length; i++) {
             portalHashes[i] = String.Format("{0:X6}", rng.Next(0x1000000));
             Portals[i].transform.GetChild(4).GetComponent<TMP_Text>().text = portalHashes[i];
@@ -36,11 +38,15 @@ public class PortalController : Executable
 
     void FixedUpdate()
     {
-        // if(Input.GetKey("i")) {
-        //     setLink(LinkA, LinkB);
-        // } else if (Input.GetKey("o")) {
-        //     unlink(LinkA, LinkB);
-        // }
+        if(state == "Linked") {
+            if(Vector3.Distance(Player.transform.position, LinkA.transform.position) > 50 && Vector3.Distance(Player.transform.position, LinkB.transform.position) > 50) {
+                LinkA.transform.Find("cam").gameObject.SetActive(false);
+                LinkB.transform.Find("cam").gameObject.SetActive(false);
+            } else {
+                LinkA.transform.Find("cam").gameObject.SetActive(true);
+                LinkB.transform.Find("cam").gameObject.SetActive(true);
+            }
+        }
     }
 
     public void setLink(GameObject portalA, GameObject portalB) {
@@ -119,7 +125,7 @@ public class PortalController : Executable
             }
 
             if(args.Length < 4) {
-                return "Please enter the ID hashes of the portals to link\n";
+                return "use portal link ID1 ID2\nthe ID of 2 portals is required to link\n";
             }
 
             for(int i = 0; i<portalHashes.Length; i++) {
