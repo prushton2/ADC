@@ -13,3 +13,5 @@
 - no surrounding awareness lmao (make colors or smth)
 	- refer to colors of room for door names
 - straighten out spawn hall
+
+
