@@ -9,6 +9,7 @@ public class RandomPlacer : MonoBehaviour
     public Vector3[] positions;
     public Vector3[] rotations;
     public int choice;
+    public bool useLocalPosition = false;
     System.Random rand = new System.Random();
 
     void Start() {
@@ -24,7 +25,12 @@ public class RandomPlacer : MonoBehaviour
         place(choice);
     }
     void place(int choice) {
+
         transform.position = positions[choice];
+        if(useLocalPosition) {
+            transform.localPosition = positions[choice];
+        }
+        
         transform.eulerAngles = rotations[choice];
     }
 }
