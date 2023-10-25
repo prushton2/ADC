@@ -8,17 +8,30 @@ public class Ghost : MonoBehaviour
 {
     // Start is called before the first frame update
 
+    public Material black;
+    public Material red;
+
     public NavMeshAgent agent;
     public GameObject player;
 
     public GameObject eye;
 
-    public int outsideLineOfSightTimer = 0;
+    private int outsideLineOfSightTimer = 61; //the timer for how long since the player has left the ghosts LOS
     public int outsideLineOfSightTimerMax = 60;
 
     public int smellDistance = 20;
 
+    public int damageOnCollide = 50;
+    public int damageCooldown = 60;
+    private int internalDamageCooldown = 0; //the counter for how long until damage can be re dealt
+
+
+    private int InternalInstaKillTimer = 0; //the timer that ticks until the player can be instakilled for being inside a ghost
+    public int instaKillTimer = 200;
+
     private RaycastHit destination;
+
+    private Collider lastCol;
 
     void Start()
     {
@@ -29,6 +42,17 @@ public class Ghost : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
+        if(InternalInstaKillTimer > instaKillTimer) {
+            InternalInstaKillTimer++;
+        
+            if(InternalInstaKillTimer > instaKillTimer) {
+                lastCol.GetComponent<HealthPool>().kill();
+            }
+        
+        }
+
+        internalDamageCooldown--;
         outsideLineOfSightTimer++;
 
         eye.transform.LookAt(player.transform.position);
@@ -39,15 +63,37 @@ public class Ghost : MonoBehaviour
             eye.transform.localRotation.eulerAngles.z
         ));
 
-        Physics.Raycast(eye.transform.position, eye.transform.forward, out destination, 50, ~0);
         
+        if(outsideLineOfSightTimer < outsideLineOfSightTimerMax) {
+            agent.destination = player.transform.position;
+            eye.GetComponent<Renderer>().material = red;
+        } else {
+            eye.GetComponent<Renderer>().material = black;
+        }
+
+
+        if(!Physics.Raycast(eye.transform.position, eye.transform.forward, out destination, 60, ~0)) {
+            return;
+        }
+
         if(destination.transform.gameObject.name == "Player" || Vector3.Distance(transform.position, player.transform.position) < smellDistance) {
             outsideLineOfSightTimer = 0;
         }
+    }
 
-        if(outsideLineOfSightTimer < outsideLineOfSightTimerMax) {
-            agent.destination = player.transform.position;
+    private void OnTriggerEnter(Collider col) {
+        if(internalDamageCooldown > 0) {
+            return;
         }
 
+        col.gameObject.GetComponent<HealthPool>().dealDamage(damageOnCollide);
+        lastCol = col;
+        InternalInstaKillTimer++;
+        internalDamageCooldown = damageCooldown;
     }
+
+    private void OnTriggerExit(Collider col) {
+        InternalInstaKillTimer = 0;
+    }
+    
 }

@@ -12,14 +12,31 @@ public class HealthPool : MonoBehaviour
     public bool isInvincible = false;
     public bool isDead = false;
 
+    public GameObject healthBar;
+
+    public float HealthBarMaxWidth;
+
+    public GameObject youdiedtext;
+    public Player player;
+
+
     public void updateIsDead() {
         isDead = health <= minHealth;
+
+        healthBar.GetComponent<RectTransform>().sizeDelta = new Vector2(getPercentage() * HealthBarMaxWidth, healthBar.GetComponent<RectTransform>().sizeDelta.y);
+
+        if(isDead) {
+            player.movementLocked = true;
+            youdiedtext.SetActive(true);
+        }
     }
 
     public void dealDamage(int damage) {
         if(isInvincible) {
             return;
         }
+
+        Debug.Log(damage);
         
         health = Math.Clamp(health - damage, minHealth, maxHealth);
         updateIsDead();
@@ -34,19 +51,9 @@ public class HealthPool : MonoBehaviour
         return (float)health / (float)maxHealth;
     }
 
-    public JObject getData() {
-        return JObject.FromObject(new {
-            maxHealth = (int)this.maxHealth,
-            minHealth = (int)this.minHealth,
-            health = (int)this.health,
-            isDead = (bool)this.isDead
-        });
-    }
-
-    public void setData(JObject health) {
-        this.maxHealth = (int)health["maxHealth"];
-        this.minHealth = (int)health["minHealth"];
-        this.health = (int)health["health"];
-        this.isDead = (bool)health["isDead"];
+    public void kill() {
+        Debug.Log("kill");
+        health = minHealth;
+        updateIsDead();
     }
 }
