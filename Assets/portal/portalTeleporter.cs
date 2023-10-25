@@ -20,6 +20,9 @@ public class portalTeleporter : MonoBehaviour
 
     void FixedUpdate() {
         timer = Math.Max(timer - 1, 0);
+        try {
+            otherPortal.transform.Find("plane").gameObject.SetActive(true);
+        } catch {} 
 
         if(timer == 0) {
             disableTravel = false;
@@ -47,6 +50,7 @@ public class portalTeleporter : MonoBehaviour
         
         otherPortal.transform.Find("back").GetComponent<portalTeleporter>().disableTravel = true;
         otherPortal.transform.Find("back").GetComponent<portalTeleporter>().timer = 30;
+        otherPortal.transform.Find("plane").gameObject.SetActive(false);
         
         col.gameObject.GetComponent<CharacterController>().enabled = false;
 
@@ -54,8 +58,11 @@ public class portalTeleporter : MonoBehaviour
         col.gameObject.transform.position -= distanceOffset;
 
         Vector3 portalRotationalDifference = otherPortal.transform.eulerAngles - transform.eulerAngles;
+
+        col.gameObject.transform.RotateAround(otherPortal.transform.position, Vector3.up, portalRotationalDifference.y + 180);
+
         Quaternion lookdir = Quaternion.LookRotation(col.gameObject.transform.forward, Vector3.up);
-        col.gameObject.transform.eulerAngles = lookdir.eulerAngles + new Vector3(0, 180, 0) + portalRotationalDifference;
+        col.gameObject.transform.eulerAngles = lookdir.eulerAngles + new Vector3(0, 0, 0) + portalRotationalDifference;
 
         col.gameObject.GetComponent<CharacterController>().enabled = true;
 
